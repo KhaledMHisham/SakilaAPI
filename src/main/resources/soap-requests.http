@@ -1,0 +1,12 @@
+POST http://localhost:8888/sakila/ws/account
+Content-Type: text/xml
+
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+               xmlns:jets="http://soap.controllers.presentation.sakila.jets.iti.gov/">
+    <soap:Body>
+        <jets:getActorInfos>
+            <arg0>shit here XD</arg0>
+        </jets:getActorInfos>
+    </soap:Body>
+
+</soap:Envelope>
