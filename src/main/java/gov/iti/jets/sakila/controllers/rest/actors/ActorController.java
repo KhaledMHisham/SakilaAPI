@@ -1,17 +1,11 @@
 package gov.iti.jets.sakila.controllers.rest.actors;
 
 import gov.iti.jets.sakila.controllers.rest.exceptions.ResourceNotFoundException;
-import gov.iti.jets.sakila.services.actors.ActorService;
-import jakarta.inject.Inject;
+import gov.iti.jets.sakila.services.ActorService;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import gov.iti.jets.sakila.dtos.ActorDto;
 import jakarta.ws.rs.core.Response;
-
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 @Path("/actors")
@@ -37,7 +31,7 @@ public class ActorController {
             return Response.ok().entity(ActorService.INSTANCE.getActorById(id)).build();
         }
         catch (NoSuchElementException exception){
-            throw new ResourceNotFoundException("Invalid Actor ID: " + id);
+            throw new ResourceNotFoundException(exception.getMessage());
         }
     }
 
@@ -49,7 +43,7 @@ public class ActorController {
             return Response.ok().entity(ActorService.INSTANCE.updateActor(id, actorDto)).build();
         }
         catch (NoSuchElementException exception){
-            throw new ResourceNotFoundException("Invalid Actor ID: " + id);
+            throw new ResourceNotFoundException(exception.getMessage());
         }
     }
 
@@ -61,7 +55,7 @@ public class ActorController {
             return Response.ok().entity(ActorService.INSTANCE.deleteActorById(id)).build();
         }
         catch (NoSuchElementException exception){
-            throw new ResourceNotFoundException("Invalid Actor ID: " + id);
+            throw new ResourceNotFoundException(exception.getMessage());
         }
     }
 }

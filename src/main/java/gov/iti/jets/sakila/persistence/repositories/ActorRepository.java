@@ -27,8 +27,8 @@ public class ActorRepository extends CrudRepository<Actor, Integer>{
     public Actor findById(Integer id, EntityManager entityManager) {
         return super.findById(Actor.class, id, entityManager)
                 .orElseThrow(() ->
-                new NoSuchElementException("Actor Resource Not Found ID: " + id)
-        );
+                        new NoSuchElementException("Actor Resource Not Found ID: " + id)
+                );
     }
     public Actor deleteById(Integer id, EntityManager entityManager) {
         return super.deleteById(Actor.class, id, entityManager)

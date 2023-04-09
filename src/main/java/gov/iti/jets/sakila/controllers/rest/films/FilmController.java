@@ -3,12 +3,10 @@ package gov.iti.jets.sakila.controllers.rest.films;
 
 import gov.iti.jets.sakila.controllers.rest.exceptions.ResourceNotFoundException;
 import gov.iti.jets.sakila.dtos.FilmDto;
-import gov.iti.jets.sakila.services.actors.ActorService;
-import gov.iti.jets.sakila.services.actors.FilmService;
+import gov.iti.jets.sakila.services.FilmService;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.ext.Provider;
 
 import java.util.NoSuchElementException;
 
@@ -33,7 +31,7 @@ public class FilmController {
                     .build();
         }
         catch (NoSuchElementException exception){
-            throw new ResourceNotFoundException("Invalid Film ID: " + id);
+            throw new ResourceNotFoundException(exception.getMessage());
         }
     }
 

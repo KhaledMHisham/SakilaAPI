@@ -1,13 +1,17 @@
-package gov.iti.jets.sakila.services.actors;
+package gov.iti.jets.sakila.services;
 
 import gov.iti.jets.sakila.dtos.ActorDto;
+import gov.iti.jets.sakila.dtos.FilmDto;
 import gov.iti.jets.sakila.dtos.messages.SuccessMessage;
+import gov.iti.jets.sakila.mappers.FilmMapper;
 import gov.iti.jets.sakila.persistence.entities.Actor;
+import gov.iti.jets.sakila.persistence.entities.FilmActor;
 import gov.iti.jets.sakila.persistence.repositories.ActorRepository;
 import gov.iti.jets.sakila.persistence.repositories.FilmActorRepository;
 import gov.iti.jets.sakila.persistence.utils.DatabaseExecutor;
 import gov.iti.jets.sakila.mappers.ActorMapper;
 import java.util.List;
+import java.util.Set;
 
 public enum ActorService {
     INSTANCE;
@@ -59,5 +63,20 @@ public enum ActorService {
                 }
         );
         return SuccessMessage.getInstance();
+    }
+
+    public List<FilmDto> getAllFilmsByActorId(Integer actorId){
+        List<FilmDto> result =
+            DatabaseExecutor.executeInTransaction(em -> {
+                        Actor actor = actorRepository.findById(actorId, em);
+                        Set<FilmActor> filmActors =  actor.getFilmActors();
+
+                        return filmActors.stream()
+                                .map(filmActor -> filmActor.getFilm())
+                                .map(film -> FilmMapper.INSTANCE.toDto(film))
+                                .toList();
+                    }
+            );
+        return result;
     }
 }

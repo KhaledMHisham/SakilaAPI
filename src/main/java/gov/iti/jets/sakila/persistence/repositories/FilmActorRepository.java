@@ -22,4 +22,8 @@ public class FilmActorRepository extends CrudRepository<FilmActor, FilmActorId>{
     public void delete(Object obj, EntityManager em) {
         super.delete(obj, em);
     }
+
+    public void deleteById(FilmActorId id, EntityManager em){
+        super.deleteById(FilmActor.class, id, em);
+    }
 }

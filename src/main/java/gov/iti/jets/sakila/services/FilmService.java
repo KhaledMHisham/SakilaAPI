@@ -1,4 +1,4 @@
-package gov.iti.jets.sakila.services.actors;
+package gov.iti.jets.sakila.services;
 import gov.iti.jets.sakila.dtos.ActorDto;
 import gov.iti.jets.sakila.dtos.FilmDto;
 import gov.iti.jets.sakila.dtos.messages.ResourceCreatedMessage;
@@ -92,5 +92,30 @@ public enum FilmService {
             actorRepository.save(actor, em);
         });
         return new ResourceCreatedMessage();
+    }
+
+    public SuccessMessage deleteActorFromFilm(Integer filmId, Integer actorId){
+        FilmActorId filmActorId = new FilmActorId();
+        filmActorId.setActorId(actorId);
+        filmActorId.setFilmId(filmId);
+        DatabaseExecutor.executeInTransactionWithoutResult(em -> {
+            filmActorRepository.deleteById(filmActorId, em);
+        });
+        return SuccessMessage.getInstance();
+    }
+
+    public SuccessMessage setLanguageToFilm(Boolean isOriginal, Short languageId, Integer filmId){
+        DatabaseExecutor.executeInTransactionWithoutResult(em -> {
+            Language language = languageRepository.findById(languageId, em);
+            Film film = filmRepository.findById(filmId, em);
+            if(isOriginal){
+                film.setOriginalLanguage(language);
+            }
+            else{
+                film.setLanguage(language);
+            }
+            filmRepository.save(film, em);
+        });
+        return SuccessMessage.getInstance();
     }
 }
