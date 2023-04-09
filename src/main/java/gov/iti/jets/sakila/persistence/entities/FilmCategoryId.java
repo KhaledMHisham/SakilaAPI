@@ -3,6 +3,7 @@ package gov.iti.jets.sakila.persistence.entities;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.Hibernate;
 
@@ -11,6 +12,7 @@ import java.util.Objects;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Embeddable
 public class FilmCategoryId implements Serializable {
     private static final long serialVersionUID = 4930837280589656374L;
@@ -19,6 +21,11 @@ public class FilmCategoryId implements Serializable {
 
     @Column(name = "category_id", columnDefinition = "TINYINT UNSIGNED not null")
     private Short categoryId;
+
+    public FilmCategoryId(Integer filmId, Short categoryId) {
+        this.filmId = filmId;
+        this.categoryId = categoryId;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -34,4 +41,11 @@ public class FilmCategoryId implements Serializable {
         return Objects.hash(filmId, categoryId);
     }
 
+    @Override
+    public String toString() {
+        return "FilmCategoryId{" +
+                "filmId=" + filmId +
+                ", categoryId=" + categoryId +
+                '}';
+    }
 }

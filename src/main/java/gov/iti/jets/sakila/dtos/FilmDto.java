@@ -1,6 +1,7 @@
 package gov.iti.jets.sakila.dtos;
 
 import gov.iti.jets.sakila.persistence.entities.Actor;
+import gov.iti.jets.sakila.persistence.entities.FilmCategory;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -33,6 +34,8 @@ public class FilmDto implements Serializable {
     private BigDecimal replacementCost;
     private Instant lastUpdate;
     private Set<FilmActorDto> filmActors = new LinkedHashSet<>();
+    private Set<FilmCategoryDto> filmCategories = new LinkedHashSet<>();
+
     @Size(max = 5)
     private String rating;
     @Size(max = 54)

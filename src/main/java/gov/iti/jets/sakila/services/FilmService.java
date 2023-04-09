@@ -6,10 +6,7 @@ import gov.iti.jets.sakila.dtos.messages.SuccessMessage;
 import gov.iti.jets.sakila.mappers.ActorMapper;
 import gov.iti.jets.sakila.mappers.FilmMapper;
 import gov.iti.jets.sakila.persistence.entities.*;
-import gov.iti.jets.sakila.persistence.repositories.ActorRepository;
-import gov.iti.jets.sakila.persistence.repositories.FilmActorRepository;
-import gov.iti.jets.sakila.persistence.repositories.FilmRepository;
-import gov.iti.jets.sakila.persistence.repositories.LanguageRepository;
+import gov.iti.jets.sakila.persistence.repositories.*;
 import gov.iti.jets.sakila.persistence.utils.DatabaseExecutor;
 
 import java.time.Instant;
@@ -18,10 +15,13 @@ import java.util.*;
 
 public enum FilmService {
     INSTANCE;
-    private FilmRepository filmRepository = FilmRepository.getInstance();
-    private LanguageRepository languageRepository = LanguageRepository.getInstance();
-    private ActorRepository actorRepository = ActorRepository.getInstance();
-    private FilmActorRepository filmActorRepository = FilmActorRepository.getInstance();
+    private final FilmRepository filmRepository = FilmRepository.getInstance();
+    private final LanguageRepository languageRepository = LanguageRepository.getInstance();
+    private final ActorRepository actorRepository = ActorRepository.getInstance();
+    private final FilmActorRepository filmActorRepository = FilmActorRepository.getInstance();
+    private final CategoryRepository categoryRepository = CategoryRepository.getInstance();
+    private final FilmCategoryRepository filmCategoryRepository = FilmCategoryRepository.getInstance();
+
     public List<FilmDto> getAllFilms(){
         List<Film> films = DatabaseExecutor.execute(
                 em -> filmRepository.findAll(em)
@@ -79,13 +79,11 @@ public enum FilmService {
     }
 
     public ResourceCreatedMessage addActorToFilm(Integer filmId, Integer actorId) {
-        FilmActor filmActor = new FilmActor();
+
         DatabaseExecutor.executeInTransactionWithoutResult(em -> {
             Actor actor = actorRepository.findById(actorId, em);
             Film film = filmRepository.findById(filmId, em);
-
-            filmActor.setFilm(film);
-            filmActor.setActor(actor);
+            FilmActor filmActor = new FilmActor(actor, film);
 
             filmActorRepository.save(filmActor, em);
             filmRepository.save(film, em);
@@ -115,6 +113,25 @@ public enum FilmService {
                 film.setLanguage(language);
             }
             filmRepository.save(film, em);
+        });
+        return SuccessMessage.getInstance();
+    }
+
+    public ResourceCreatedMessage addCategoryToFilm(Integer filmId, Short categoryId) {
+        DatabaseExecutor.executeInTransactionWithoutResult( em -> {
+            Film film = filmRepository.findById(filmId, em);
+            Category category = categoryRepository.findById(categoryId, em);
+            FilmCategory filmCategory = new FilmCategory(film, category);
+            filmCategoryRepository.save(filmCategory, em);
+        });
+        return ResourceCreatedMessage.getInstance();
+    }
+
+    public SuccessMessage removeCategoryFromFilm(Integer filmId, Short categoryId) {
+        DatabaseExecutor.executeInTransactionWithoutResult(em -> {
+            FilmCategoryId filmCategoryId = new FilmCategoryId(filmId, categoryId);
+            System.out.println(filmCategoryId);
+            filmCategoryRepository.deleteById(filmCategoryId, em);
         });
         return SuccessMessage.getInstance();
     }
