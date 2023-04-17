@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -17,7 +18,7 @@ import java.util.Set;
 @ToString
 @Entity
 @Table(name = "actor")
-public class Actor {
+public class Actor  extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "actor_id", columnDefinition = "SMALLINT UNSIGNED not null")
@@ -40,5 +41,18 @@ public class Actor {
     @ToString.Exclude
     @OneToMany(mappedBy = "actor")
     private Set<FilmActor> filmActors = new LinkedHashSet<>();
+
+    @PrePersist
+    public void prePersist(){
+        if (lastUpdate == null) {
+            lastUpdate = Instant.now().truncatedTo(ChronoUnit.SECONDS);
+        }
+    }
+    @PreUpdate
+    public void preUpdate(){
+        if (lastUpdate == null) {
+            lastUpdate = Instant.now().truncatedTo(ChronoUnit.SECONDS);
+        }
+    }
 
 }

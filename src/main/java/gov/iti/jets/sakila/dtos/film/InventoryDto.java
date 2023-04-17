@@ -1,0 +1,21 @@
+package gov.iti.jets.sakila.dtos.film;
+
+import gov.iti.jets.sakila.dtos.BaseDto;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+
+import java.io.Serializable;
+
+/**
+ * A DTO for the {@link gov.iti.jets.sakila.persistence.entities.Inventory} entity
+ */
+@NoArgsConstructor
+@Builder
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
+public class InventoryDto extends BaseDto implements Serializable {
+    @NotNull
+    private StoreDto store;
+}

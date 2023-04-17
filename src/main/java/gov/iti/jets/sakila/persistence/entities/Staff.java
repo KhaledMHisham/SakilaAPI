@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -14,8 +15,10 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "staff")
-public class Staff {
+public class Staff  extends BaseEntity{
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "staff_id", columnDefinition = "TINYINT UNSIGNED not null")
     private Short id;
 
@@ -72,4 +75,16 @@ public class Staff {
     @OneToMany(mappedBy = "staff")
     private Set<Rental> rentals = new LinkedHashSet<>();
 
+    @PrePersist
+    public void prePersist(){
+        if (lastUpdate == null) {
+            lastUpdate = Instant.now().truncatedTo(ChronoUnit.SECONDS);
+        }
+    }
+    @PreUpdate
+    public void preUpdate(){
+        if (lastUpdate == null) {
+            lastUpdate = Instant.now().truncatedTo(ChronoUnit.SECONDS);
+        }
+    }
 }

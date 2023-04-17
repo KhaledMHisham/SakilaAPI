@@ -5,8 +5,10 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -14,7 +16,8 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "address")
-public class Address {
+@ToString
+public class Address extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "address_id", columnDefinition = "SMALLINT UNSIGNED not null")
@@ -60,10 +63,20 @@ public class Address {
     @OneToMany(mappedBy = "address")
     private Set<Customer> customers = new LinkedHashSet<>();
 
-/*
-    TODO [JPA Buddy] create field to map the 'location' column
-     Available actions: Define target Java type | Uncomment as is | Remove column mapping
+    @Lob
     @Column(name = "location", columnDefinition = "GEOMETRY(65535) not null")
-    private Object location;
-*/
+    private byte[] location;
+
+    @PrePersist
+    public void prePersist(){
+        if (lastUpdate == null) {
+            lastUpdate = Instant.now().truncatedTo(ChronoUnit.SECONDS);
+        }
+    }
+    @PreUpdate
+    public void preUpdate(){
+        if (lastUpdate == null) {
+            lastUpdate = Instant.now().truncatedTo(ChronoUnit.SECONDS);
+        }
+    }
 }

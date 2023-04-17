@@ -1,14 +1,22 @@
 package gov.iti.jets.sakila.persistence.utils;
 
 import jakarta.persistence.EntityManager;
-
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class DatabaseExecutor {
 
+    public static EntityManager getEntityManager(){
+        if(ThreadLocalManager.INSTANCE.get() == null){
+            EntityManager entityManager = JpaManager.PRODUCTION_DATABASE.getEntityManager();
+            System.out.println("CREATING ENTITY MANAGER " + entityManager);
+            ThreadLocalManager.INSTANCE.set(entityManager);
+        }
+        return ThreadLocalManager.INSTANCE.get();
+    }
+
     public static <R> R execute(Function<EntityManager, R> dbOperation){
-        var entityManager = JpaManager.PRODUCTION_DATABASE.getEntityManager();
+        EntityManager entityManager = getEntityManager();
         try {
             R result = dbOperation.apply(entityManager);
             return result;
@@ -17,8 +25,9 @@ public class DatabaseExecutor {
             throw exception;
         }
     }
+
     public static <R> R executeInTransaction(Function<EntityManager, R> dbOperation){
-        var entityManager = JpaManager.PRODUCTION_DATABASE.getEntityManager();
+        EntityManager entityManager = getEntityManager();
         var transaction = entityManager.getTransaction();
         transaction.begin();
         try {
@@ -30,13 +39,10 @@ public class DatabaseExecutor {
             transaction.rollback();
             throw exception;
         }
-        finally {
-            entityManager.close();
-        }
     }
 
     public static void executeInTransactionWithoutResult(Consumer<EntityManager> dbOperation){
-        var entityManager = JpaManager.PRODUCTION_DATABASE.getEntityManager();
+        EntityManager entityManager = getEntityManager();
         var transaction = entityManager.getTransaction();
         transaction.begin();
         try {
@@ -46,9 +52,6 @@ public class DatabaseExecutor {
         catch (RuntimeException exception){
             transaction.rollback();
             throw exception;
-        }
-        finally {
-            entityManager.close();
         }
     }
 }

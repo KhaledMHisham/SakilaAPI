@@ -17,22 +17,4 @@ public class CategoryRepository extends CrudRepository<Category, Short>{
         return categoryRepository;
     }
 
-    public List<Category> findAll(EntityManager em){
-        return super.findAll(Category.class, em);
-    }
-
-    public Category save(Category category, EntityManager em){
-        category.setLastUpdate(Instant.now().truncatedTo(ChronoUnit.SECONDS));
-        return super.save(category, em);
-    }
-
-    public Category findById(Short categoryId, EntityManager em) {
-        return super.findById(Category.class, categoryId, em)
-                    .orElseThrow(() ->
-                        new NoSuchElementException("Category Resource Not Found ID: " + categoryId)
-        );
-    }
-    public void remove(Category category, EntityManager em) {
-        em.remove(category);
-    }
 }

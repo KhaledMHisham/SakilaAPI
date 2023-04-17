@@ -7,23 +7,24 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 @Getter
 @Setter
 @Entity
 @NoArgsConstructor
 @Table(name = "film_actor")
-public class FilmActor {
+public class FilmActor  extends BaseEntity{
     @EmbeddedId
     private FilmActorId id = new FilmActorId();
 
     @MapsId("actorId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.MERGE)
     @JoinColumn(name = "actor_id", nullable = false)
     private Actor actor;
 
     @MapsId("filmId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.MERGE)
     @JoinColumn(name = "film_id", nullable = false)
     private Film film;
 
@@ -35,5 +36,17 @@ public class FilmActor {
     public FilmActor(Actor actor, Film film) {
         this.actor = actor;
         this.film = film;
+    }
+    @PrePersist
+    public void prePersist(){
+        if (lastUpdate == null) {
+            lastUpdate = Instant.now().truncatedTo(ChronoUnit.SECONDS);
+        }
+    }
+    @PreUpdate
+    public void preUpdate(){
+        if (lastUpdate == null) {
+            lastUpdate = Instant.now().truncatedTo(ChronoUnit.SECONDS);
+        }
     }
 }

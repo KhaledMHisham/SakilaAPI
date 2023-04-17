@@ -30,6 +30,14 @@ public class FilmActorId implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "FilmActorId{" +
+                "actorId=" + actorId +
+                ", filmId=" + filmId +
+                '}';
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(actorId, filmId);
     }

@@ -8,13 +8,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "film_category")
-public class FilmCategory {
+public class FilmCategory  extends BaseEntity{
     @EmbeddedId
     private FilmCategoryId id = new FilmCategoryId();
 
@@ -35,5 +36,17 @@ public class FilmCategory {
     public FilmCategory(Film film, Category category) {
         this.film = film;
         this.category = category;
+    }
+    @PrePersist
+    public void prePersist(){
+        if (lastUpdate == null) {
+            lastUpdate = Instant.now().truncatedTo(ChronoUnit.SECONDS);
+        }
+    }
+    @PreUpdate
+    public void preUpdate(){
+        if (lastUpdate == null) {
+            lastUpdate = Instant.now().truncatedTo(ChronoUnit.SECONDS);
+        }
     }
 }

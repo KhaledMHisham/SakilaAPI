@@ -18,14 +18,4 @@ public class FilmCategoryRepository extends CrudRepository<FilmCategory, FilmCat
         return filmCategoryRepository;
     }
 
-    public FilmCategory save(FilmCategory filmCategory, EntityManager em){
-        filmCategory.setLastUpdate(Instant.now().truncatedTo(ChronoUnit.SECONDS));
-        return super.save(filmCategory, em);
-    }
-    public void deleteById(FilmCategoryId filmCategoryId, EntityManager em){
-        super.deleteById(FilmCategory.class, filmCategoryId, em);
-    }
-    public void remove(FilmCategory filmCategory, EntityManager em) {
-        em.remove(filmCategory);
-    }
 }
