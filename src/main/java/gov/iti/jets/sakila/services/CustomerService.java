@@ -12,7 +12,6 @@ import gov.iti.jets.sakila.persistence.repositories.CustomerRepository;
 import java.util.Collection;
 
 public class CustomerService extends BaseService<Customer, CustomerDto, Integer>{
-
     public static final CustomerService INSTANCE = new CustomerService();
     private CustomerRepository customerRepository = CustomerRepository.getInstance();
     private RentalMapper rentalMapper = RentalMapper.INSTANCE;

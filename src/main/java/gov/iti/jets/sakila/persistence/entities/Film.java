@@ -13,6 +13,7 @@ import java.util.Set;
 
 import lombok.ToString;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Setter
@@ -69,7 +70,8 @@ public class Film  extends BaseEntity{
     private String specialFeatures;
 
     @NotNull
-    @Column(name = "last_update", nullable = false)
+    @Column(name = "last_update", columnDefinition = "TIMESTAMP", nullable = false)
+    @ColumnDefault("CURRENT_TIMESTAMP")
     private Instant lastUpdate;
 
     @OneToMany(mappedBy = "film")
@@ -81,16 +83,4 @@ public class Film  extends BaseEntity{
     @OneToMany(mappedBy = "film")
     private Set<FilmCategory> filmCategories = new LinkedHashSet<>();
 
-    @PrePersist
-    public void prePersist(){
-        if (lastUpdate == null) {
-            lastUpdate = Instant.now().truncatedTo(ChronoUnit.SECONDS);
-        }
-    }
-    @PreUpdate
-    public void preUpdate(){
-        if (lastUpdate == null) {
-            lastUpdate = Instant.now().truncatedTo(ChronoUnit.SECONDS);
-        }
-    }
 }

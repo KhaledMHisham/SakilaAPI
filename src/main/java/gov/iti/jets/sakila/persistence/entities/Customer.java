@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -49,11 +50,12 @@ public class Customer  extends BaseEntity{
     @Column(name = "active", nullable = false)
     private Boolean active = false;
 
-    @NotNull
-    @Column(name = "create_date", nullable = false)
+    @Column(name = "create_date", columnDefinition = "TIMESTAMP", nullable = false)
+    @ColumnDefault("CURRENT_TIMESTAMP")
     private Instant createDate;
 
-    @Column(name = "last_update")
+    @Column(name = "last_update", columnDefinition = "TIMESTAMP", nullable = false)
+    @ColumnDefault("CURRENT_TIMESTAMP")
     private Instant lastUpdate;
 
     @OneToMany(mappedBy = "customer")
@@ -61,17 +63,4 @@ public class Customer  extends BaseEntity{
 
     @OneToMany(mappedBy = "customer")
     private Set<Rental> rentals = new LinkedHashSet<>();
-
-    @PrePersist
-    public void prePersist(){
-        if (lastUpdate == null) {
-            lastUpdate = Instant.now().truncatedTo(ChronoUnit.SECONDS);
-        }
-    }
-    @PreUpdate
-    public void preUpdate(){
-        if (lastUpdate == null) {
-            lastUpdate = Instant.now().truncatedTo(ChronoUnit.SECONDS);
-        }
-    }
 }

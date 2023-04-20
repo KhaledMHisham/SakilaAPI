@@ -23,40 +23,25 @@ public class FilmController {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
     public Response getFilmById(@PathParam("id") Integer id){
-        try {
-            return Response.ok()
-                    .entity(FilmService.INSTANCE.findById(id))
-                    .build();
-        }
-        catch (NoSuchElementException exception){
-            throw new ResourceNotFoundException(exception.getMessage());
-        }
+        return Response.ok()
+                .entity(FilmService.INSTANCE.findById(id))
+                .build();
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response AddNewFilm(FilmDto filmDto){
-        try {
-            return Response.ok()
-                    .entity(FilmService.INSTANCE.insert(filmDto))
-                    .build();
-        }
-        catch (NoSuchElementException exception){
-            throw new ResourceNotFoundException(exception.getMessage());
-        }
+        return Response.ok()
+                .entity(FilmService.INSTANCE.insert(filmDto))
+                .build();
     }
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
     public Response updateFilmById(@PathParam("id") Integer id, FilmDto filmDto){
-        try {
-            return Response.ok()
-                    .entity(FilmService.INSTANCE.update(id, filmDto))
-                    .build();
-        }
-        catch (NoSuchElementException exception){
-            throw new ResourceNotFoundException(exception.getMessage());
-        }
+        return Response.ok()
+                .entity(FilmService.INSTANCE.update(id, filmDto))
+                .build();
     }
 }

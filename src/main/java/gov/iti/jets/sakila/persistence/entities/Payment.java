@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -37,23 +38,11 @@ public class Payment  extends BaseEntity{
     @Column(name = "amount", nullable = false, precision = 5, scale = 2)
     private BigDecimal amount;
 
-    @NotNull
-    @Column(name = "payment_date", nullable = false)
+    @Column(name = "payment_date", columnDefinition = "TIMESTAMP", nullable = false)
+    @ColumnDefault("CURRENT_TIMESTAMP")
     private Instant paymentDate;
 
-    @Column(name = "last_update")
+    @Column(name = "last_update", columnDefinition = "TIMESTAMP", nullable = false)
+    @ColumnDefault("CURRENT_TIMESTAMP")
     private Instant lastUpdate;
-
-    @PrePersist
-    public void prePersist(){
-        if (lastUpdate == null) {
-            lastUpdate = Instant.now().truncatedTo(ChronoUnit.SECONDS);
-        }
-    }
-    @PreUpdate
-    public void preUpdate(){
-        if (lastUpdate == null) {
-            lastUpdate = Instant.now().truncatedTo(ChronoUnit.SECONDS);
-        }
-    }
 }

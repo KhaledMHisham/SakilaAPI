@@ -18,11 +18,6 @@ public class FilmController {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllFilmsByActorId(@PathParam("actorId") Integer actorId){
-        try {
-            return Response.ok().entity(ActorService.INSTANCE.getAllFilmsByActorId(actorId)).build();
-        }
-        catch (NoSuchElementException exception){
-            throw new ResourceNotFoundException(exception.getMessage());
-        }
+        return Response.ok().entity(ActorService.INSTANCE.getAllFilmsByActorId(actorId)).build();
     }
 }

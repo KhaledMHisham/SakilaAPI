@@ -16,12 +16,4 @@ public class CityController {
                 .entity(CityService.INSTANCE.findCitiesByCountryId(countryId))
                 .build();
     }
-
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response addNewCity(@PathParam("countryId") Integer countryId, CityDto cityDto){
-        return Response.ok()
-                .entity(CityService.INSTANCE.insert(cityDto))
-                .build();
-    }
 }

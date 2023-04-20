@@ -11,20 +11,14 @@ import java.util.NoSuchElementException;
 
 @Path("/films/{filmId}/categories/")
 public class CategoryController {
-
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{categoryId}")
     public Response addCategoryToFilm(@PathParam("filmId") Integer filmId,
                                       @PathParam("categoryId") Short categoryId){
-        try {
-            return Response.ok()
-                    .entity(FilmService.INSTANCE.addCategoryToFilm(filmId, categoryId))
-                    .build();
-        }
-        catch (NoSuchElementException exception){
-            throw new ResourceNotFoundException(exception.getMessage());
-        }
+        return Response.ok()
+                .entity(FilmService.INSTANCE.addCategoryToFilm(filmId, categoryId))
+                .build();
     }
 
     @DELETE
@@ -32,13 +26,8 @@ public class CategoryController {
     @Path("{categoryId}")
     public Response removeCategoryFromFilm(@PathParam("filmId") Integer filmId,
                                       @PathParam("categoryId") Short categoryId){
-        try {
-            return Response.ok()
-                    .entity(FilmService.INSTANCE.removeCategoryFromFilm(filmId, categoryId))
-                    .build();
-        }
-        catch (NoSuchElementException exception){
-            throw new ResourceNotFoundException(exception.getMessage());
-        }
+        return Response.ok()
+                .entity(FilmService.INSTANCE.removeCategoryFromFilm(filmId, categoryId))
+                .build();
     }
 }

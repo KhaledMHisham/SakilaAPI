@@ -6,7 +6,6 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 @Path("/rentals")
 public class RentalController {
-
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllRentals(){
@@ -26,7 +25,7 @@ public class RentalController {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{rentalId}")
-    public Response addNewRental(@PathParam("rentalId") Integer rentalId, RentalDto rentalDto){
+    public Response updateRental(@PathParam("rentalId") Integer rentalId, RentalDto rentalDto){
         return Response.ok()
                 .entity(RentalService.INSTANCE.update(rentalId, rentalDto))
                 .build();

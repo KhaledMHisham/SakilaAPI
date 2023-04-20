@@ -3,6 +3,7 @@ package gov.iti.jets.sakila.dtos.store;
 import gov.iti.jets.sakila.dtos.location.AddressDto;
 import gov.iti.jets.sakila.dtos.BaseDto;
 import jakarta.validation.constraints.NotNull;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.*;
 
 import java.io.Serializable;

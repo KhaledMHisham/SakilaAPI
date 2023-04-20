@@ -34,5 +34,4 @@ public interface StoreMapper extends BaseMapper<Store, StoreDto> {
         }
         return entity;
     }
-
 }

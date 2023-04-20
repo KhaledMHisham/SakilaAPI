@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -29,24 +30,13 @@ public class FilmActor  extends BaseEntity{
     private Film film;
 
     @NotNull
-    @Column(name = "last_update", nullable = false)
+    @Column(name = "last_update", columnDefinition = "TIMESTAMP", nullable = false)
+    @ColumnDefault("CURRENT_TIMESTAMP")
     private Instant lastUpdate;
 
 
     public FilmActor(Actor actor, Film film) {
         this.actor = actor;
         this.film = film;
-    }
-    @PrePersist
-    public void prePersist(){
-        if (lastUpdate == null) {
-            lastUpdate = Instant.now().truncatedTo(ChronoUnit.SECONDS);
-        }
-    }
-    @PreUpdate
-    public void preUpdate(){
-        if (lastUpdate == null) {
-            lastUpdate = Instant.now().truncatedTo(ChronoUnit.SECONDS);
-        }
     }
 }

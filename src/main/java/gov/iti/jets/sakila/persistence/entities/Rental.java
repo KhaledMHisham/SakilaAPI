@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -20,8 +21,8 @@ public class Rental  extends BaseEntity{
     @Column(name = "rental_id", nullable = false)
     private Integer id;
 
-    @NotNull
-    @Column(name = "rental_date", nullable = false)
+    @Column(name = "rental_date", columnDefinition = "TIMESTAMP", nullable = false)
+    @ColumnDefault("CURRENT_TIMESTAMP")
     private Instant rentalDate;
 
     @NotNull
@@ -43,22 +44,11 @@ public class Rental  extends BaseEntity{
     private Staff staff;
 
     @NotNull
-    @Column(name = "last_update", nullable = false)
+    @Column(name = "last_update", columnDefinition = "TIMESTAMP", nullable = false)
+    @ColumnDefault("CURRENT_TIMESTAMP")
     private Instant lastUpdate;
 
     @OneToMany(mappedBy = "rental")
     private Set<Payment> payments = new LinkedHashSet<>();
 
-    @PrePersist
-    public void prePersist(){
-        if (lastUpdate == null) {
-            lastUpdate = Instant.now().truncatedTo(ChronoUnit.SECONDS);
-        }
-    }
-    @PreUpdate
-    public void preUpdate(){
-        if (lastUpdate == null) {
-            lastUpdate = Instant.now().truncatedTo(ChronoUnit.SECONDS);
-        }
-    }
 }

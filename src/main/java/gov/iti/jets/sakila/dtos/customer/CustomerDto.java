@@ -34,7 +34,7 @@ public class CustomerDto extends BaseDto implements Serializable {
     private AddressDto address;
     @NotNull
     private Boolean active;
-    @NotNull
+
     private Instant createDate;
     private Instant lastUpdate;
 }

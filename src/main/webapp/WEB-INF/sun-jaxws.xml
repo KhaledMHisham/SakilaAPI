@@ -4,8 +4,54 @@
 
     <endpoint
         name="AccountWebService"
-        implementation="gov.iti.jets.sakila.controllers.soap.AccountService"
-        url-pattern="/ws/account" />
-
-
+        implementation="gov.iti.jets.sakila.controllers.soap.actors.ActorWebService"
+        url-pattern="/ws/actors" />
+    <endpoint
+            name="FilmWebService"
+            implementation="gov.iti.jets.sakila.controllers.soap.films.FilmWebService"
+            url-pattern="/ws/films" />
+    <endpoint
+            name="CategoryWebService"
+            implementation="gov.iti.jets.sakila.controllers.soap.category.CategoryWebService"
+            url-pattern="/ws/category" />
+    <endpoint
+            name="LanguageWebService"
+            implementation="gov.iti.jets.sakila.controllers.soap.languages.LanguageWebService"
+            url-pattern="/ws/languages" />
+    <endpoint
+            name="CountryWebService"
+            implementation="gov.iti.jets.sakila.controllers.soap.countries.CountryWebService"
+            url-pattern="/ws/countries" />
+    <endpoint
+            name="CityWebService"
+            implementation="gov.iti.jets.sakila.controllers.soap.cities.CityWebService"
+            url-pattern="/ws/cities" />
+    <endpoint
+            name="AddressWebService"
+            implementation="gov.iti.jets.sakila.controllers.soap.addresses.AddressWebService"
+            url-pattern="/ws/addresses" />
+    <endpoint
+            name="StaffWebService"
+            implementation="gov.iti.jets.sakila.controllers.soap.staff.StaffWebService"
+            url-pattern="/ws/staff" />
+    <endpoint
+            name="StoreWebService"
+            implementation="gov.iti.jets.sakila.controllers.soap.store.StoreWebService"
+            url-pattern="/ws/stores"/>
+    <endpoint
+            name="InventoryWebService"
+            implementation="gov.iti.jets.sakila.controllers.soap.inventory.InventoryWebService"
+            url-pattern="/ws/inventories"/>
+    <endpoint
+            name="CustomerWebService"
+            implementation="gov.iti.jets.sakila.controllers.soap.customers.CustomerWebService"
+            url-pattern="/ws/customers"/>
+    <endpoint
+            name="RentalWebService"
+            implementation="gov.iti.jets.sakila.controllers.soap.rentals.RentalWebService"
+            url-pattern="/ws/rentals"/>
+    <endpoint
+            name="PaymentWebService"
+            implementation="gov.iti.jets.sakila.controllers.soap.payments.PaymentWebService"
+            url-pattern="/ws/payments"/>
 </endpoints>

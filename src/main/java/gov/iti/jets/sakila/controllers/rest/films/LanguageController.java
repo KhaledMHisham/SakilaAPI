@@ -10,21 +10,15 @@ import java.util.NoSuchElementException;
 
 @Path("/films/{filmId}/languages")
 public class LanguageController {
-
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{languageId}")
     public Response addLanguageToFilm(@QueryParam("original") Boolean isOriginal,
                                       @PathParam("languageId") Short languageId,
                                       @PathParam("filmId") Integer filmId){
-        try {
-            return Response.ok()
-                    .entity(FilmService.INSTANCE.setLanguageToFilm(isOriginal, languageId, filmId))
-                    .build();
-        }
-        catch (NoSuchElementException exception){
-            throw new ResourceNotFoundException(exception.getMessage());
-        }
+        return Response.ok()
+                .entity(FilmService.INSTANCE.setLanguageToFilm(isOriginal, languageId, filmId))
+                .build();
     }
 
 }

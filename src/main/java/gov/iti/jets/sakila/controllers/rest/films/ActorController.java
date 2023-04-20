@@ -15,34 +15,19 @@ public class ActorController {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllActorsByFilmId(@PathParam("filmId") Integer filmId){
-        try {
-            return Response.ok().entity(FilmService.INSTANCE.getAllActorsByFilmId(filmId)).build();
-        }
-        catch (NoSuchElementException exception){
-            throw new ResourceNotFoundException(exception.getMessage());
-        }
+        return Response.ok().entity(FilmService.INSTANCE.getAllActorsByFilmId(filmId)).build();
     }
     @POST
     @Path("{actorId}")
     public Response addActorToFilm(@PathParam("filmId") Integer filmId,
                                    @PathParam("actorId") Integer actorId){
-        try {
-            return Response.ok().entity(FilmService.INSTANCE.addActorToFilm(filmId, actorId)).build();
-        }
-        catch (NoSuchElementException exception){
-            throw new ResourceNotFoundException(exception.getMessage());
-        }
+        return Response.ok().entity(FilmService.INSTANCE.addActorToFilm(filmId, actorId)).build();
     }
 
     @DELETE
     @Path("{actorId}")
     public Response deleteActorFromFilm(@PathParam("filmId") Integer filmId,
                                         @PathParam("actorId") Integer actorId){
-        try {
-            return Response.ok().entity(FilmService.INSTANCE.deleteActorFromFilm(filmId, actorId)).build();
-        }
-        catch (NoSuchElementException exception){
-            throw new ResourceNotFoundException(exception.getMessage());
-        }
+        return Response.ok().entity(FilmService.INSTANCE.deleteActorFromFilm(filmId, actorId)).build();
     }
 }

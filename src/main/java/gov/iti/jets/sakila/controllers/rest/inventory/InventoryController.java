@@ -19,7 +19,7 @@ public class InventoryController {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllInventories(InventoryDto inventoryDto){
+    public Response addNewInventoryItem(InventoryDto inventoryDto){
         return Response.ok()
                 .entity(InventoryService.INSTANCE.insert(inventoryDto))
                 .build();
