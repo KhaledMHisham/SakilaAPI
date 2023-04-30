@@ -27,7 +27,6 @@ public class Country  extends BaseEntity{
     @Column(name = "country", nullable = false, length = 50)
     private String country;
 
-    @NotNull
     @Column(name = "last_update", columnDefinition = "TIMESTAMP", nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP")
     private Instant lastUpdate;

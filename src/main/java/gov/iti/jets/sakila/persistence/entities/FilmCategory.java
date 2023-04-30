@@ -30,7 +30,6 @@ public class FilmCategory  extends BaseEntity{
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @NotNull
     @Column(name = "last_update", columnDefinition = "TIMESTAMP", nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP")
     private Instant lastUpdate;

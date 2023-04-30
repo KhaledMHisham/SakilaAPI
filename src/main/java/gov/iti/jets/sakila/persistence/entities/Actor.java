@@ -35,7 +35,6 @@ public class Actor  extends BaseEntity{
     @Column(name = "last_name", nullable = false, length = 45)
     private String lastName;
 
-    @NotNull
     @Column(name = "last_update", columnDefinition = "TIMESTAMP", nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP")
     private Instant lastUpdate;

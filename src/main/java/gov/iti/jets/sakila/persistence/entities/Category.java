@@ -27,7 +27,6 @@ public class Category extends BaseEntity {
     @Column(name = "name", nullable = false, length = 25)
     private String name;
 
-    @NotNull
     @Column(name = "last_update", columnDefinition = "TIMESTAMP", nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP")
     private Instant lastUpdate;

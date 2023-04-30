@@ -31,7 +31,6 @@ public class Store  extends BaseEntity{
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
-    @NotNull
     @Column(name = "last_update", columnDefinition = "TIMESTAMP", nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP")
     private Instant lastUpdate;

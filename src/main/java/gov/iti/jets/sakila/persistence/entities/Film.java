@@ -69,7 +69,6 @@ public class Film  extends BaseEntity{
     @Column(name = "special_features", length = 54)
     private String specialFeatures;
 
-    @NotNull
     @Column(name = "last_update", columnDefinition = "TIMESTAMP", nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP")
     private Instant lastUpdate;

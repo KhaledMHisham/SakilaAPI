@@ -52,7 +52,6 @@ public class Address extends BaseEntity{
     @Column(name = "phone", nullable = false, length = 20)
     private String phone;
 
-    @NotNull
     @Column(name = "last_update", columnDefinition = "TIMESTAMP", nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP")
     private Instant lastUpdate;

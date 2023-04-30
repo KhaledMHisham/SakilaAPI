@@ -31,7 +31,6 @@ public class Inventory  extends BaseEntity{
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 
-    @NotNull
     @Column(name = "last_update", columnDefinition = "TIMESTAMP", nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP")
     private Instant lastUpdate;

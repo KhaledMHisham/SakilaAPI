@@ -29,7 +29,6 @@ public class FilmActor  extends BaseEntity{
     @JoinColumn(name = "film_id", nullable = false)
     private Film film;
 
-    @NotNull
     @Column(name = "last_update", columnDefinition = "TIMESTAMP", nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP")
     private Instant lastUpdate;

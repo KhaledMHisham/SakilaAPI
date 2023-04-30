@@ -43,7 +43,6 @@ public class Rental  extends BaseEntity{
     @JoinColumn(name = "staff_id", nullable = false)
     private Staff staff;
 
-    @NotNull
     @Column(name = "last_update", columnDefinition = "TIMESTAMP", nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP")
     private Instant lastUpdate;
